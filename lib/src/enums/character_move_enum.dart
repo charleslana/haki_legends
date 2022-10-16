@@ -1,0 +1,4 @@
+enum CharacterMoveEnum {
+  standard,
+  run,
+}
