@@ -1,4 +1,3 @@
-import 'package:flame/components.dart';
 import 'package:haki_legends/src/components/characters/luffy_character.dart';
 import 'package:haki_legends/src/components/characters/usopp_character.dart';
 import 'package:haki_legends/src/enums/character_mode_enum.dart';
