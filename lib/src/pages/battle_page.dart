@@ -65,7 +65,7 @@ class BattleGame extends FlameGame {
       LineData.rightPosition1.x,
       LineData.rightPosition1.y,
     );
-    await add(enemy);
+    await player.parent!.add(enemy);
     return super.onLoad();
   }
 
@@ -75,7 +75,8 @@ class BattleGame extends FlameGame {
     final isRunMove = ref.watch(battleProvider).runMove;
     if (isRunMove) {
       player
-        ..x += 10
+        ..setAnimation()
+        ..x += 7
         ..priority = 1;
       // ..y += 1;
       return;
