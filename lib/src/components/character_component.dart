@@ -2,6 +2,7 @@ import 'package:flame/cache.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:haki_legends/src/components/characters/luffy1_character.dart';
+import 'package:haki_legends/src/enums/character_move_enum.dart';
 import 'package:haki_legends/src/models/character_model.dart';
 import 'package:haki_legends/src/pages/battle_page.dart';
 
@@ -20,6 +21,8 @@ class CharacterComponent extends SpriteAnimationComponent
   late SpriteAnimationComponent _characterComponent;
   late Image _characterImage;
   late double _characterScaleFactor;
+  late SpriteAnimation _standard;
+  late SpriteAnimation _run;
 
   @override
   Future<void>? onLoad() async {
@@ -27,29 +30,31 @@ class CharacterComponent extends SpriteAnimationComponent
     final characterPositionY = gameRef.size.y / 50 * positionY;
     _characterScaleFactor = gameRef.size.y / 50 * 0.17;
     _characterImage = await Images().load(character.spriteImage);
-    final characterAnimation = SpriteAnimation.fromFrameData(
+    _standard = SpriteAnimation.fromFrameData(
       _characterImage,
       SpriteAnimationData(character.sprites),
     );
     _characterComponent = SpriteAnimationComponent()
-      ..animation = characterAnimation
+      ..animation = _standard
       ..size = character.size * _characterScaleFactor
       ..position = Vector2(characterPositionX, characterPositionY)
       ..anchor = Anchor.center;
     if (character.isFlip) {
       _characterComponent.flipHorizontally();
     }
+    _run = SpriteAnimation.fromFrameData(
+      _characterImage,
+      SpriteAnimationData(Luffy1Character.run().sprites),
+    );
     await add(_characterComponent);
     return super.onLoad();
   }
 
-  void setAnimation() {
-    final run = Luffy1Character.run();
+  void changeCurrentAnimation() {}
+
+  void setAnimation(CharacterModel character, CharacterMoveEnum move) {
     _characterComponent
-      ..animation = SpriteAnimation.fromFrameData(
-        _characterImage,
-        SpriteAnimationData(run.sprites),
-      )
-      ..size = run.size * _characterScaleFactor;
+      ..animation = move == CharacterMoveEnum.run ? _run : _standard
+      ..size = character.size * _characterScaleFactor;
   }
 }
