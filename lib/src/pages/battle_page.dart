@@ -36,7 +36,7 @@ class BattlePage extends ConsumerWidget {
   }
 }
 
-class BattleGame extends FlameGame {
+class BattleGame extends FlameGame with HasCollisionDetection {
   BattleGame(this.ref);
 
   final WidgetRef ref;
@@ -76,11 +76,21 @@ class BattleGame extends FlameGame {
     super.update(dt);
     final isRunMove = ref.watch(battleProvider).runMove;
     if (isRunMove) {
-      player
-        ..setAnimation(Luffy1Character.run(), CharacterMoveEnum.run)
-        ..x += 7
-        ..priority = 1;
-      // ..y += 1;
+      // player
+      //   ..setAnimation(Luffy1Character.run(), CharacterMoveEnum.run)
+      //   ..x += size.y / 70
+      //   ..priority = 1;
+      // // ..y += 1;
+      if (player.x + (player.character.size.x * player.characterScaleFactor) <
+          size.x - player.characterPositionX) {
+        player
+          ..setAnimation(Luffy1Character.run(), CharacterMoveEnum.run)
+          ..x += size.y / 70
+          ..priority = 1;
+        // ..y += 1;
+        return;
+      }
+      // ref.read(battleProvider.notifier).runMove = false;
       return;
     }
     player
