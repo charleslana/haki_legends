@@ -36,7 +36,7 @@ class SkillComponent extends PositionComponent
 
   @override
   void onTapUp(TapUpEvent event) {
-    print('tap up');
+    // print('tap up');
     final move = gameRef.ref.read(battleProvider.notifier).move;
     if (move != CharacterMoveEnum.standard) {
       gameRef.playerComponent
@@ -49,13 +49,13 @@ class SkillComponent extends PositionComponent
 
   @override
   void onTapDown(TapDownEvent event) {
-    print('tap down');
+    // print('tap down');
     super.onTapDown(event);
   }
 
   @override
   void onTapCancel(TapCancelEvent event) {
-    print('tap cancel');
+    // print('tap cancel');
     super.onTapCancel(event);
   }
 }
