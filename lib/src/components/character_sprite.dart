@@ -1,11 +1,11 @@
 import 'package:flame/components.dart';
 import 'package:haki_legends/src/models/character_model.dart';
 
-class Luffy1Character {
-  Luffy1Character._();
+class CharacterSprite {
+  CharacterSprite._();
 
-  static CharacterModel standard() {
-    final sprites = [
+  static CharacterModel luffy1() {
+    final standardSprites = [
       SpriteAnimationFrameData(
         srcPosition: Vector2(145, 195),
         srcSize: Vector2(43, 75),
@@ -32,15 +32,7 @@ class Luffy1Character {
         stepTime: 0.2,
       ),
     ];
-    return CharacterModel(
-      spriteImage: 'characters/luffy1.png',
-      size: Vector2(43, 75),
-      sprites: sprites,
-    );
-  }
-
-  static CharacterModel run() {
-    final sprites = [
+    final runSprites = [
       SpriteAnimationFrameData(
         srcPosition: Vector2(393, 195),
         srcSize: Vector2(58, 78),
@@ -83,9 +75,39 @@ class Luffy1Character {
       ),
     ];
     return CharacterModel(
-      spriteImage: 'characters/luffy1.png',
-      size: Vector2(58, 78),
-      sprites: sprites,
+      image: 'characters/luffy1.png',
+      standardSprites: standardSprites,
+      runSprites: runSprites,
+    );
+  }
+
+  static CharacterModel usopp() {
+    final standardSprites = [
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(1241.5, 330),
+        srcSize: Vector2(58, 57),
+        stepTime: 0.25,
+      ),
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(886.5, 445),
+        srcSize: Vector2(58, 57),
+        stepTime: 0.25,
+      ),
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(285.5, 504),
+        srcSize: Vector2(58, 57),
+        stepTime: 0.25,
+      ),
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(945.5, 445),
+        srcSize: Vector2(58, 57),
+        stepTime: 0.25,
+      ),
+    ];
+    return CharacterModel(
+      image: 'characters/usopp.png',
+      standardSprites: standardSprites,
+      runSprites: standardSprites,
     );
   }
 }
