@@ -12,6 +12,10 @@ class EnemyComponent extends PositionComponent with HasGameRef<BattleGame> {
     this.line,
   ) : super() {
     debugMode = true;
+    size = character.standardSprites[0].srcSize;
+    // position.x = CharacterLine.getPosition(line, 694).x;
+    // position.y = CharacterLine.getPosition(line, 600).y;
+    priority = 1;
   }
 
   final CharacterModel character;
@@ -27,9 +31,10 @@ class EnemyComponent extends PositionComponent with HasGameRef<BattleGame> {
 
   @override
   Future<void>? onLoad() async {
+    print(size);
     final characterImage = await Images().load(character.image);
-    positionX = CharacterLine.getPosition(line, gameRef.size.y).x;
-    positionY = CharacterLine.getPosition(line, gameRef.size.y).y;
+    // positionX = CharacterLine.getPosition(line, gameRef.size.y).x;
+    // positionY = CharacterLine.getPosition(line, gameRef.size.y).y;
     characterSize = character.standardSprites[0].srcSize *
         CharacterLine.getScale(gameRef.size);
     _standard = SpriteAnimation.fromFrameData(
@@ -44,8 +49,8 @@ class EnemyComponent extends PositionComponent with HasGameRef<BattleGame> {
       ..animation = _standard
       ..size = characterSize
       ..anchor = Anchor.bottomCenter
-      ..x = positionX
-      ..y = positionY
+      // ..x = positionX
+      // ..y = positionY
       ..flipHorizontally();
     await add(_spriteAnimationComponent);
     await add(RectangleHitbox());

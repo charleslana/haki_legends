@@ -17,6 +17,9 @@ class PlayerComponent extends PositionComponent
     this.line,
   ) : super() {
     debugMode = true;
+    size = character.runSprites[0].srcSize;
+    position.x = CharacterLine.getPosition(line, 694).x;
+    position.y = CharacterLine.getPosition(line, 600).y;
   }
 
   final CharacterModel character;

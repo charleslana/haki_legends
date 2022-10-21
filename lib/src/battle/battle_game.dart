@@ -1,7 +1,9 @@
+import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:haki_legends/src/battle/character_line.dart';
 import 'package:haki_legends/src/components/battle_background_component.dart';
 import 'package:haki_legends/src/components/character_sprite.dart';
 import 'package:haki_legends/src/components/enemy_component.dart';
@@ -9,6 +11,7 @@ import 'package:haki_legends/src/components/player_component.dart';
 import 'package:haki_legends/src/components/skill_component.dart';
 import 'package:haki_legends/src/enums/character_line_enum.dart';
 import 'package:haki_legends/src/enums/character_move_enum.dart';
+import 'package:haki_legends/src/enums/line_enum.dart';
 import 'package:haki_legends/src/providers/battle_provider.dart';
 
 class BattleGame extends FlameGame
@@ -28,12 +31,21 @@ class BattleGame extends FlameGame
   @override
   Future<void>? onLoad() {
     add(BattleBackgroundComponent());
-    final playerTopLeft = CharacterSprite.luffy1();
-    playerComponent = PlayerComponent(playerTopLeft, CharacterLineEnum.player1);
+    final player1 = CharacterSprite.luffy1();
+    playerComponent = PlayerComponent(player1, CharacterLineEnum.player1);
     add(playerComponent);
-    final enemyTopRight = CharacterSprite.usopp();
-    enemyComponent = EnemyComponent(enemyTopRight, CharacterLineEnum.enemy1);
-    add(enemyComponent);
+    final enemy1 = CharacterSprite.usopp();
+    enemyComponent = EnemyComponent(enemy1, CharacterLineEnum.enemy1);
+    // add(enemyComponent);
+    final parent = PositionComponent(
+      position: Vector2(100, 100),
+      size: Vector2(100, 100),
+      anchor: Anchor.center,
+    );
+    final child = PositionComponent(position: Vector2(0, -50));
+    child.debugMode = true;
+    parent.add(enemyComponent);
+    add(parent);
     add(SkillComponent());
     return super.onLoad();
   }
