@@ -4,12 +4,12 @@ import 'package:haki_legends/src/enums/character_line_enum.dart';
 class CharacterLine {
   CharacterLine._();
 
-  static Vector2 getPosition(CharacterLineEnum line, double size) {
+  static Vector2 getPosition(CharacterLineEnum line, Vector2 size) {
     switch (line) {
-      case CharacterLineEnum.player1:
-        return Vector2(size / 100 * 50, size / 100 * 45);
-      case CharacterLineEnum.enemy1:
-        return Vector2(size / 40 * 50, size / 100 * 45);
+      case CharacterLineEnum.leftLine1:
+        return Vector2(size.y / 1.9, size.y / 2);
+      case CharacterLineEnum.rightLine1:
+        return Vector2(size.y / 0.8, size.y / 2);
       default:
         return Vector2(0, 0);
     }

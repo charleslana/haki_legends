@@ -1,17 +1,16 @@
-import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:haki_legends/src/battle/character_line.dart';
 import 'package:haki_legends/src/components/battle_background_component.dart';
+import 'package:haki_legends/src/components/character_component.dart';
+import 'package:haki_legends/src/components/character_position_component.dart';
 import 'package:haki_legends/src/components/character_sprite.dart';
-import 'package:haki_legends/src/components/enemy_component.dart';
-import 'package:haki_legends/src/components/player_component.dart';
+import 'package:haki_legends/src/components/skill_action_component.dart';
 import 'package:haki_legends/src/components/skill_component.dart';
 import 'package:haki_legends/src/enums/character_line_enum.dart';
 import 'package:haki_legends/src/enums/character_move_enum.dart';
-import 'package:haki_legends/src/enums/line_enum.dart';
 import 'package:haki_legends/src/providers/battle_provider.dart';
 
 class BattleGame extends FlameGame
@@ -20,8 +19,8 @@ class BattleGame extends FlameGame
 
   final WidgetRef ref;
 
-  late PlayerComponent playerComponent;
-  late EnemyComponent enemyComponent;
+  late CharacterPositionComponent leftLine1;
+  late CharacterComponent playerComponent;
 
   @override
   Color backgroundColor() {
@@ -32,21 +31,25 @@ class BattleGame extends FlameGame
   Future<void>? onLoad() {
     add(BattleBackgroundComponent());
     final player1 = CharacterSprite.luffy1();
-    playerComponent = PlayerComponent(player1, CharacterLineEnum.player1);
-    add(playerComponent);
+    playerComponent = CharacterComponent(character: player1);
+    leftLine1 = CharacterPositionComponent(
+      CharacterLine.getPosition(CharacterLineEnum.leftLine1, size),
+      playerComponent.character.standardSprites[0].srcSize,
+      size,
+    )..add(playerComponent);
+    add(leftLine1);
     final enemy1 = CharacterSprite.usopp();
-    enemyComponent = EnemyComponent(enemy1, CharacterLineEnum.enemy1);
-    // add(enemyComponent);
-    final parent = PositionComponent(
-      position: Vector2(100, 100),
-      size: Vector2(100, 100),
-      anchor: Anchor.center,
-    );
-    final child = PositionComponent(position: Vector2(0, -50));
-    child.debugMode = true;
-    parent.add(enemyComponent);
-    add(parent);
-    add(SkillComponent());
+    final enemyComponent = CharacterComponent(character: enemy1);
+    final rightLine1 = CharacterPositionComponent(
+      CharacterLine.getPosition(CharacterLineEnum.rightLine1, size),
+      enemyComponent.character.standardSprites[0].srcSize,
+      size,
+    )
+      ..add(enemyComponent)
+      ..flipHorizontally();
+    add(rightLine1);
+    add(SkillComponent(size));
+    add(SkillActionComponent());
     return super.onLoad();
   }
 
@@ -54,9 +57,8 @@ class BattleGame extends FlameGame
   void update(double dt) {
     final move = ref.watch(battleProvider).move;
     if (move == CharacterMoveEnum.run &&
-        (playerComponent.x + playerComponent.characterSize.x) <
-            (size.x - playerComponent.positionX)) {
-      playerComponent
+        (leftLine1.x + leftLine1.size.x) < size.x) {
+      leftLine1
         ..x += size.y / 70
         ..priority = 1;
     }
