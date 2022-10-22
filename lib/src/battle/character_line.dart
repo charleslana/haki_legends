@@ -7,9 +7,9 @@ class CharacterLine {
   static Vector2 getPosition(CharacterLineEnum line, Vector2 size) {
     switch (line) {
       case CharacterLineEnum.leftLine1:
-        return Vector2(size.y / 1.9, size.y / 2);
+        return Vector2(size.x / 2.9, size.y / 2);
       case CharacterLineEnum.rightLine1:
-        return Vector2(size.y / 0.8, size.y / 2);
+        return Vector2(size.x / 1.5, size.y / 2);
       default:
         return Vector2(0, 0);
     }

@@ -12,19 +12,20 @@ class CharacterComponent extends SpriteAnimationComponent
     required this.character,
   }) : super() {
     debugMode = true;
-    position = Vector2(-10, 0);
+    position = Vector2(0, 0);
   }
 
   final CharacterModel character;
 
   late SpriteAnimationComponent _spriteAnimationComponent;
-  late SpriteAnimation _standard;
+  SpriteAnimation? standard;
   late SpriteAnimation _run;
+  late SpriteAnimation _standardAttack;
 
   @override
   Future<void>? onLoad() async {
     final characterImage = await Images().load(character.image);
-    _standard = SpriteAnimation.fromFrameData(
+    standard = SpriteAnimation.fromFrameData(
       characterImage,
       SpriteAnimationData(character.standardSprites),
     );
@@ -32,26 +33,43 @@ class CharacterComponent extends SpriteAnimationComponent
       characterImage,
       SpriteAnimationData(character.runSprites),
     );
+    _standardAttack = SpriteAnimation.fromFrameData(
+      characterImage,
+      SpriteAnimationData(
+        character.standardAttackSprites,
+        loop: false,
+      ),
+    );
     _spriteAnimationComponent = SpriteAnimationComponent()
-      ..animation = _standard
+      ..animation = standard
       ..size = character.standardSprites[0].srcSize * (gameRef.size.y / 350);
     await add(_spriteAnimationComponent);
     return super.onLoad();
   }
 
   void changeMove(CharacterMoveEnum move, WidgetRef ref) {
+    print(move);
+    ref.read(battleProvider.notifier).changeMove(move);
     switch (move) {
       case CharacterMoveEnum.standard:
-        ref.read(battleProvider.notifier).changeMove(move);
         _spriteAnimationComponent
           ..size = character.standardSprites[0].srcSize * (gameRef.size.y / 350)
-          ..animation = _standard;
+          ..animation = standard;
         break;
       case CharacterMoveEnum.run:
-        ref.read(battleProvider.notifier).changeMove(move);
         _spriteAnimationComponent
           ..size = character.runSprites[0].srcSize * (gameRef.size.y / 350)
           ..animation = _run;
+        break;
+      case CharacterMoveEnum.standardAttack:
+        _spriteAnimationComponent
+          ..size = character.standardSprites[0].srcSize * (gameRef.size.y / 350)
+          ..animation = _standardAttack;
+        _standardAttack.onComplete = () {
+          print('Finish');
+          changeMove(CharacterMoveEnum.standard, ref);
+          _standardAttack.reset();
+        };
         break;
       default:
     }

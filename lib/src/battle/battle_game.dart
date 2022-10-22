@@ -55,13 +55,22 @@ class BattleGame extends FlameGame
 
   @override
   void update(double dt) {
+    super.update(dt);
     final move = ref.watch(battleProvider).move;
     if (move == CharacterMoveEnum.run &&
         (leftLine1.x + leftLine1.size.x) < size.x) {
       leftLine1
-        ..x += size.y / 70
+        ..x += size.x / 120
         ..priority = 1;
+      return;
     }
-    super.update(dt);
+    if (move == CharacterMoveEnum.standard &&
+        playerComponent.standard != null) {
+      playerComponent.changeMove(move, ref);
+      print('standard');
+      if (leftLine1.x >= leftLine1.characterPosition.x) {
+        leftLine1.x -= size.x / 40;
+      }
+    }
   }
 }

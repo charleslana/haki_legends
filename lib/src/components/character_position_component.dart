@@ -29,10 +29,19 @@ class CharacterPositionComponent extends PositionComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    final ref = gameRef.ref.watch(battleProvider);
     if (other is CharacterPositionComponent) {
-      print('collision');
-      gameRef.ref.read(battleProvider.notifier).move =
-          CharacterMoveEnum.standard;
+      print(ref.move);
+      if (ref.move == CharacterMoveEnum.standard) {
+        print('tem que voltar o personagem');
+        // gameRef.leftLine1.x = characterPosition.x;
+        return;
+      }
+      if (ref.move != CharacterMoveEnum.standardAttack) {
+        print('collision');
+        gameRef.playerComponent
+            .changeMove(CharacterMoveEnum.standardAttack, gameRef.ref);
+      }
     }
     super.onCollision(intersectionPoints, other);
   }

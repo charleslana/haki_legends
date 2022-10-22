@@ -74,10 +74,63 @@ class CharacterSprite {
         stepTime: 0.1,
       ),
     ];
+    final standardAttackSprites = [
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(0, 53),
+        srcSize: Vector2(38, 59),
+        stepTime: 0.1,
+      ),
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(451, 195),
+        srcSize: Vector2(58, 78),
+        stepTime: 0.1,
+      ),
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(135, 0),
+        srcSize: Vector2(46, 42),
+        stepTime: 0.1,
+      ),
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(38, 53),
+        srcSize: Vector2(37, 59),
+        stepTime: 0.1,
+      ),
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(463, 354),
+        srcSize: Vector2(32, 123),
+        stepTime: 0.1,
+      ),
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(398, 477),
+        srcSize: Vector2(32, 135),
+        stepTime: 0.1,
+      ),
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(211, 354),
+        srcSize: Vector2(32, 113),
+        stepTime: 0.1,
+      ),
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(267, 0),
+        srcSize: Vector2(46, 49),
+        stepTime: 0.1,
+      ),
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(45, 0),
+        srcSize: Vector2(45, 37),
+        stepTime: 0.1,
+      ),
+      SpriteAnimationFrameData(
+        srcPosition: Vector2(90, 0),
+        srcSize: Vector2(45, 37),
+        stepTime: 0.1,
+      ),
+    ];
     return CharacterModel(
       image: 'characters/luffy1.png',
       standardSprites: standardSprites,
       runSprites: runSprites,
+      standardAttackSprites: standardAttackSprites,
     );
   }
 
@@ -108,6 +161,7 @@ class CharacterSprite {
       image: 'characters/usopp.png',
       standardSprites: standardSprites,
       runSprites: standardSprites,
+      standardAttackSprites: standardSprites,
     );
   }
 }
